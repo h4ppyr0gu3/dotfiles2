@@ -44,3 +44,4 @@ alias ram:clean="su -c sync; echo 1 | sudo tee /proc/sys/vm/drop_caches"
 
 alias kernel:unsigned="~/bin/kernel-unsigned"
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias open="xdg-open"

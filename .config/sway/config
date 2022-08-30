@@ -7,7 +7,7 @@ set $down j
 set $up k
 set $right l
 set $term alacritty
-set $menu wofi --show drun -I
+set $menu  wofi -m -G --show drun -i -I -W 500
 set $workspace1 "1:"
 set $workspace2 "2:⚛"
 set $workspace3 "3:"
@@ -29,9 +29,11 @@ set $workspace19 "9:♔"
 
 set $wallpaper /home/david/.config/wallpapers/zim_ripple.jpg
 set $lockscreen $HOME/.config/wallpapers/$(ls $HOME/.config/wallpapers | shuf -n 1)
-set $external_display DP-1
-set $internal_display eDP-1
 
+# SET DISPLAY BEGIN
+set $display1 eDP-1
+set $display2 DP-1
+# SET DISPLAY END
 
 font "TerminessTTF Nerd Font 12"
 
@@ -42,27 +44,29 @@ output * bg $wallpaper fill
 # List outputs by running: swaymsg -t get_outputs
 
 # NEC monitor
-# output eDP-1 resolution 1366x768 position 0,1050
+# output $display_1 resolution 1366x768 position 0,1050
 # output HDMI-A-1 resolution 1680x1050 position 683,0
 
 # Acer monitor
-# output eDP-1 resolution 1366x768 position 0,1080
+# output $display_1 resolution 1366x768 position 0,1080
 # output HDMI-A-1 resolution 1920x1080 position 1000,0
 
 # Acer + dell
-output eDP-1 resolution 3840x2160 position 0,1080
-output $external_display resolution 1920x1080 position 0,0
+# SET OUTPUT BEGIN
+output $display1 resolution 3840x2160 position 0,1080
+output $display2 resolution 1920x1080 position 0,0
+# SET OUTPUT END
 
 # Work moitor
-# output eDP-1 disable
+# output $display_1 disable
 # output HDMI-A-1 resolution 2560x1440 position 0,0
 
 # Work moitor
-# output eDP-1 resolution 3840x2160 position 0,1080
+# output $display_1 resolution 3840x2160 position 0,1080
 # output DP-4 resolution 1920x1080 position 0,0
 
 # Work moitor
-# output eDP-1 resolution 1366x768 position 512,1440
+# output $display_1 resolution 1366x768 position 512,1440
 # output HDMI-A-1 resolution 2560x1440 position 0,0
 
 
@@ -77,18 +81,18 @@ for_window {
   [window_role="pop-up"] floating enable
   [window_role="bubble"] floating enable
   [window_role="dialog"] floating enable
-  [window_type="dialog"] floating enable
   [class="^firefox$"] inhibit_idle focus
   [title="Firefox$"] inhibit_idle focus
-  [workspace="2:"] inhibit_idle focus
   [window_role="^browser$"] inhibit_idle focus
   [class="^.*"] inhibit_idle fullscreen
-  [app_id="firefox"] inhibit_idle focus}
+  [app_id="firefox"] inhibit_idle focus
 }
 
 # Assign applications to workspaces
+# ASSIGN APPS BEGIN
 assign [window_role="^browser$"]: workspace $workspace11
 assign [class="Slack"]: workspace $workspace12
+# ASSIGN APPS END
 
 # ausotstart applications
 exec libinput-gestures-setup autostart start
@@ -113,35 +117,28 @@ input "type:keyboard" {
   repeat_delay 200
 }
 
-# Set outputs to 2 displays eDP-1 bound to super HDMI-A-1 bound to alt
-workspace $workspace1 output eDP-1
-workspace $workspace2 output eDP-1
-workspace $workspace3 output eDP-1
-workspace $workspace4 output eDP-1
-workspace $workspace5 output eDP-1
-workspace $workspace6 output eDP-1
-workspace $workspace7 output eDP-1
-workspace $workspace8 output eDP-1
-workspace $workspace9 output eDP-1
-# workspace $workspace11 output HDMI-A-1
-# workspace $workspace12 output HDMI-A-1
-# workspace $workspace13 output HDMI-A-1
-# workspace $workspace14 output HDMI-A-1
-# workspace $workspace15 output HDMI-A-1
-# workspace $workspace16 output HDMI-A-1
-# workspace $workspace17 output HDMI-A-1
-# workspace $workspace18 output HDMI-A-1
-# workspace $workspace19 output HDMI-A-1
-workspace $workspace11 output $external_display
-workspace $workspace12 output $external_display
-workspace $workspace13 output $external_display
-workspace $workspace14 output $external_display
-workspace $workspace15 output $external_display
-workspace $workspace16 output $external_display
-workspace $workspace17 output $external_display
-workspace $workspace18 output $external_display
-workspace $workspace19 output $external_display
+# Set outputs to 2 displays $display_1 bound to super HDMI-A-1 bound to alt
 
+# WORKSPACE OUTPUT BEGIN
+workspace $workspace1 output $display1
+workspace $workspace2 output $display1
+workspace $workspace3 output $display1
+workspace $workspace4 output $display1
+workspace $workspace5 output $display1
+workspace $workspace6 output $display1
+workspace $workspace7 output $display1
+workspace $workspace8 output $display1
+workspace $workspace9 output $display1
+workspace $workspace11 output $display2
+workspace $workspace12 output $display2
+workspace $workspace13 output $display2
+workspace $workspace14 output $display2
+workspace $workspace15 output $display2
+workspace $workspace16 output $display2
+workspace $workspace17 output $display2
+workspace $workspace18 output $display2
+workspace $workspace19 output $display2
+# WORKSPACE OUTPUT END
 
 # Key bindings
 bindsym $mod+Escape exec swaylock -f -e -i $lockscreen
@@ -184,7 +181,6 @@ bindsym $mod+6 workspace $workspace6
 bindsym $mod+7 workspace $workspace7
 bindsym $mod+8 workspace $workspace8
 bindsym $mod+9 workspace $workspace9
-bindsym $mod+0 workspace $workspace10
 bindsym $mod2+1 workspace $workspace11
 bindsym $mod2+2 workspace $workspace12
 bindsym $mod2+3 workspace $workspace13
@@ -236,7 +232,7 @@ mode $sysmenu {
   bindsym s               exec "systemctl suspend"; mode default
   bindsym Return          mode "default"
   bindsym Escape          mode "default"
-  bindsym XF86PowerOff    exec shutdown -P nowar
+  bindsym XF86PowerOff    mode "sysmenu"
 }
 
 # resize mode
@@ -269,24 +265,7 @@ mode $layout_menu {
 
 # Status Bar:
 bar {
-# {
-#   position bottom
-#     font "JetBrains Mono 11"
-#     status_command while $HOME/.config/sway/status_bar.sh; do sleep 1; done
-#     colors {
-#       statusline #ffffff
-#         background #000000AA
-#         inactive_workspace #323232AA #000000AA #5c5c5cAA
-#         active_workspace #03CEF4 #000000AA #5c5c5cAA
-#         urgent_workspace #D76A45 #F43753AA #ffffff
-#         focused_workspace #03Cef4 #03Cef4aa #ffffff
-#     }
-# },
-
- 
-swaybar_command waybar
-
-
+  swaybar_command waybar
 }
 
 # Gaps and borders
