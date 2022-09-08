@@ -45,3 +45,11 @@ alias ram:clean="su -c sync; echo 1 | sudo tee /proc/sys/vm/drop_caches"
 alias kernel:unsigned="~/bin/kernel-unsigned"
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias open="xdg-open"
+
+alias minictl="minikube kubectl"
+
+alias vedit="nvim $HOME/.config/nvim/init.vim"
+alias swayedit="nvim $HOME/.config/sway/config"
+alias funcedit="nvim $HOME/.config/functions.sh"
+alias aliasedit="nvim $HOME/.config/alias.sh"
+

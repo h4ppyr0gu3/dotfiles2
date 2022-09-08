@@ -14,3 +14,10 @@ acp() {
   git push origin $branch
 }
 
+branchdiff() {
+  base_branch="develop"
+  current_branch="HEAD"
+
+  git diff $base_branch..$current_branch | nvim -R
+}
+
