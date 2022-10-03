@@ -73,3 +73,13 @@ vim.lsp.with(
     underline = false
   }
 )
+
+-- nvim-treesitter config
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "ruby", "elixir", "lua", "rust" },
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = false,
+  },
+}

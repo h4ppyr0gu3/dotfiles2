@@ -2,7 +2,7 @@ require('packer').startup(function(use)
   use {
     "wbthomason/packer.nvim",
     "vim-airline/vim-airline",
-    "preservim/nerdcommenter",
+    "tpope/vim-commentary",
     "preservim/tagbar",
     "junegunn/fzf.vim",
     "duane9/nvim-rg",
@@ -27,6 +27,8 @@ require('packer').startup(function(use)
     "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
     "nvim-neo-tree/neo-tree.nvim", branch = "v2.x",
+    'glacambre/firenvim',
+    run = function() vim.fn['firenvim#install'](0) end
   }
   --use "numToStr/FTerm.nvim"
   --use "~/api-nvim"

@@ -30,6 +30,8 @@ set $workspace19 "9:♔"
 set $wallpaper /home/david/.config/wallpapers/zim_ripple.jpg
 set $lockscreen $HOME/.config/wallpapers/$(ls $HOME/.config/wallpapers | shuf -n 1)
 
+# XDG_CURRENT_DESKTOP=sway
+
 # SET DISPLAY BEGIN
 set $display1 eDP-1
 set $display2 DP-1
@@ -44,8 +46,8 @@ output * bg $wallpaper fill
 # List outputs by running: swaymsg -t get_outputs
 
 # SET OUTPUT BEGIN
-output $display1 resolution 3840x2160 position 260,1440
-output $display2 resolution 1920x1080 position 260,360
+output $display1 resolution 3840x2160 position 290,1440
+output $display2 resolution 1920x1080 position 290,360
 # SET OUTPUT END
 
 ### Idle configuration
@@ -72,6 +74,8 @@ assign [window_role="^browser$"]: workspace $workspace11
 assign [class="Slack"]: workspace $workspace12
 # ASSIGN APPS END
 
+for_window [title="^.*"] title_format ""
+
 # ausotstart applications
 exec libinput-gestures-setup autostart start
 exec tlp start
@@ -82,7 +86,6 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 # List inputs by running: swaymsg -t get_inputs
 input "type:touchpad" {
   dwt enabled
-  tap enabled 
   natural_scroll enabled
   middle_emulation enabled
   scroll_factor 0.55
@@ -215,57 +218,4 @@ mode $sysmenu {
 }
 
 # resize mode
-bindsym $mod+r mode "resize"
-mode "resize" {
-  bindsym $left resize shrink width 10px
-  bindsym $down resize grow height 10px
-  bindsym $up resize shrink height 10px
-  bindsym $right resize grow width 10px
-  bindsym Left resize shrink width 10px
-  bindsym Down resize grow height 10px
-  bindsym Up resize shrink height 10px
-  bindsym Right resize grow width 10px
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-
-# Layout mode
-set $layout_menu " [s]Stacking [t]Tabbed [p]Split [v]Split-V [h]Split|H "	
-bindsym $mod+s mode $layout_menu
-mode $layout_menu {
-  bindsym h splith; mode "default"
-  bindsym v splitv; mode "default"
-  bindsym s layout stacking; mode "default"
-  bindsym t layout tabbed; mode "default"
-  bindsym p layout toggle split; mode "default"
-  bindsym Escape mode "default"
-  bindsym Return mode "default"
-}
-
-# Status Bar:
-bar {
-  swaybar_command waybar
-}
-
-# Gaps and borders
-bindsym $mod+period			gaps inner all plus 5
-bindsym $mod+comma			gaps inner all minus 5
-bindsym $mod+Shift+period	gaps inner all set 10
-bindsym $mod+Shift+comma	gaps inner all set 0
-gaps inner 1
-gaps outer 1
-smart_gaps on
-hide_edge_borders smart
-default_border pixel 1 
-
-# Set colors
-set $bg #5c5c5c
-set $fg #eff1f5
-set $br #73CEF4
-set $ia #232425
-
-# class                 border  backgr. text    indicator child_border
-client.focused          $br     $br     $bg     $bg       $br
-client.focused_inactive $bg     $bg     $fg     $bg       $bg
-client.unfocused        $bg     $bg     $fg     $bg       $bg
-client.background $bg
+include ./test
