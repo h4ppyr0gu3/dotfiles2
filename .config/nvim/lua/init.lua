@@ -1,5 +1,6 @@
 require("package_install")
 require("package_config")
+Func = require("functions")
 
 -- key mapping
 vim.g.mapleader = " "
@@ -28,6 +29,7 @@ map("n", "<leader>tr", ":Explore<CR>")
 map("n", "<leader>fz", ":FZF<CR>")
 map("n", "<leader>tb", ":TagbarToggle<CR>")
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
+map("n", "<leader>fwh", "<cmd>Telescope find_files hidden=true<CR>")
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>")
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>")
@@ -38,3 +40,7 @@ map("n", "<leader>q", ":bd<CR>")
 -- move lines up or down
 map("v", "<A-j>", ":m '>+1<CR>gv=gv")
 map("v", "<A-k>", ":m '<-2<CR>gv=gv")
+-- custom function calls
+map("n", "<C-l>", ":lua print(vim.inspect())<Left><Left>")
+map("n", "cif", ":lua Func.replace_inside_function()<CR>o")
+
